@@ -28,27 +28,35 @@ const UploadSettings: React.FC<Props> = ({
 }) => {
   const [uploadOptionsState, setUploadOptionsState] = useState(uploadOptions);
 
+  const updateUploadOptionsState = <T,>(
+    attribute: string,
+    value: T,
+    forceUndefined: boolean
+  ) => {
+    setUploadOptionsState({
+      ...uploadOptionsState,
+      [attribute]: forceUndefined ? value || undefined : value
+    });
+  };
+
   const setUploadOptionsUrl = (url: string) => {
-    setUploadOptionsState({ ...uploadOptionsState, url });
+    updateUploadOptionsState('url', url, false)
   };
 
   const setUploadOptionsBasicAuth = (basicAuth: boolean) => {
-    setUploadOptionsState({ ...uploadOptionsState, basicAuth });
+    updateUploadOptionsState('basicAuth', basicAuth, false)
   };
 
   const setUploadOptionsUsername = (username: string) => {
-    setUploadOptionsState({ ...uploadOptionsState, username });
+    updateUploadOptionsState('username', username, true)
   };
 
   const setUploadOptionsPassword = (password: string) => {
-    setUploadOptionsState({ ...uploadOptionsState, password });
+    updateUploadOptionsState('password', password, true);
   };
 
   const setUploadOptionsFieldName = (fieldName: string) => {
-    setUploadOptionsState({
-      ...uploadOptionsState,
-      fieldName: fieldName || undefined
-    });
+    updateUploadOptionsState('fieldName', fieldName, true);
   };
 
   const setUploadOptions = () => {
